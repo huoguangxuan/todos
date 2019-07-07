@@ -1,0 +1,26 @@
+
+//颜色变量
+primary=#5db9ff
+default=hsla(0,0%,100%,.4)
+white = #fff
+
+//长度函数
+add(a,b = a){
+  a=unit(a,px)
+  b=unit(b,x)
+  a+b
+}
+
+//mixins
+border-radius(n)
+  -webkit-border-radius n
+  -moz-border-radius n
+  border-radius n
+
+
+support-for-ie ?= true
+
+    opacity(n)
+      opacity n
+      if support-for-ie
+        filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
