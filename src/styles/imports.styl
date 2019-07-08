@@ -1,6 +1,7 @@
 
 //颜色变量
 primary=#5db9ff
+badgea=#2cc5d2
 default=hsla(0,0%,100%,.4)
 white = #fff
 
@@ -10,7 +11,8 @@ add(a,b = a){
   b=unit(b,x)
   a+b
 }
-
+.pr15
+  padding-right add(10,0)
 //mixins
 border-radius(n)
   -webkit-border-radius n
@@ -24,3 +26,14 @@ support-for-ie ?= true
       opacity n
       if support-for-ie
         filter unquote('progid:DXImageTransform.Microsoft.Alpha(Opacity=' + round(n * 100) + ')')
+
+//辅助布局
+.pull-right
+  float right
+.pull-left
+  float left
+//一些多处用到的
+.badge-alone
+  .ivu-badge-count
+    border 0
+    background-color badgea
