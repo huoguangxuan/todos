@@ -27,6 +27,3 @@ yarn run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
-
-##### 修改1
-##### 修改3 来至hgxlocal
