@@ -2,7 +2,7 @@
 
     <div id="app">
         <Row>
-            <Col span="5"><Menu/></Col>
+            <Col span="5"><Menu></Menu></Col>
             <Col span="19" class="right"><Todo/></Col>
         </Row>
     </div>

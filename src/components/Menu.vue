@@ -44,7 +44,6 @@ export default {
       if (this.$store.getters.getTodoList.length < this.todoNum) {
          this.goList(this.$store.getters.getTodoList[0].id);
       }
-      this.todoNum = number;
       return this.$store.getters.getTodoList; // 返回vuex getters.js 定义的getTodoList数据
     }
     
@@ -55,7 +54,6 @@ export default {
     //   this.items = TODOS; // 我的把菜单数据赋值给定义的this.items
     //   this.todoId = TODOS[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
     // });
-    console.log(this.$store.state.todoList)
     this.$store.dispatch('getTodo').then(() => { // 调用vuex actions.js 里面的 getTodo函数
       this.$nextTick(() => {
         this.goList(this.todoList[0].id);
