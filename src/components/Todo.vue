@@ -47,8 +47,9 @@ export default {
   methods:{
     init() {
     // 获取到 $route下params下的id,即我们在menus.vue组件处传入的数据。
-      const ID = this.$route.params.id;
-      getTodo({ id: ID }).then(res => {
+    if(this.$route.params.id){
+        const ID = this.$route.params.id;
+         getTodo({ id:ID }).then(res => {
       
         let { id, title, count, isDelete, locked, record
         } = res.data.todo;
@@ -62,6 +63,11 @@ export default {
           isDelete: isDelete
         };
       });
+    }else{
+      console.log('err')
+    }
+      
+     
     },
     additem:function(){
       this.items.push({

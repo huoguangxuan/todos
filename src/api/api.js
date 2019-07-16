@@ -11,9 +11,10 @@ export const getTodoList = params => {
 };
 
 export const getTodo = params => {
+
   return axios.get(`/todo/listId`, {
     params: params
-  });
+  })
 };
 
 export const addRecord = params => {
