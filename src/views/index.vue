@@ -1,20 +1,39 @@
 <template>
-
     <div id="app">
         <Row>
-            <Col span="5"><Menu/></Col>
-            <Col span="19" class="right"><Todo/></Col>
+            <Col span="5">
+              <Menu>
+            </Menu>
+            <div>
+            </div>
+            </Col>
+            <Col span="19" class="right">
+              <Todo
+              :todo-id='todoId'
+              />
+            </Col>
         </Row>
-    </div>
+    </div> 
     
 </template>
 <script>
 import Menu from '../components/Menu'
 import Todo from '../components/Todo'
 export default {
+  data(){
+    return{
+      todoId:''
+    }
+  },
     components:{
         Menu,
         Todo
+    },
+    created(){
+    },
+    mounted(){
+    },
+    methods:{
     }
 }
 </script>
@@ -43,6 +62,6 @@ body
   // border-radius(20px 50px 50px 0px)
 .active
     color primary
-::placeholder
+input::placeholder
   color gray
 </style>

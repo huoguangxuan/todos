@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 import Index from '../views/index.vue'
-import HelloWorld from '../components/HelloWorld'
+import About from '../views/about.vue'
+import News from '../views/news.vue'
 import todo from '../components/Todo.vue'
 export default new VueRouter({ // 创建 router 实例，然后传 `routes` 配置
   routes: [
@@ -16,10 +17,15 @@ export default new VueRouter({ // 创建 router 实例，然后传 `routes` 配�
         component: todo
       }]
     },
-    {
-        path: '/hello',  //访问路径
-        name: 'helloword', // 路径名
-        component: HelloWorld //访问的组件,即访问‘/’,它会加载 Layouts 组件所有的内容。
-      }
+      {
+          path: '/about',  //访问路径
+          name: 'about', // 路径名
+          component: About //访问的组件,即访问‘/’,它会加载 Layouts 组件所有的内容。
+        },
+        {
+            path: '/news',  //访问路径
+            name: '新闻', // 路径名
+            component: News //访问的组件,即访问‘/’,它会加载 Layouts 组件所有的内容。
+          }
   ]
 })

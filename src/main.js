@@ -1,9 +1,8 @@
 import Vue from 'vue'
-
-
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import { plugin } from 'vue-function-api';
-
-import { Button, Icon,Row,Col,Badge } from 'iview';
+import { Button, Icon,Row,Col,Badge ,RadioGroup,Radio} from 'iview';
 import 'iview/dist/styles/iview.css';
 
 import App from './App.vue';
@@ -15,13 +14,16 @@ Vue.config.productionTip = false;
 
 Vue.use(plugin);
 
-
+//全局引入element
+Vue.use(ElementUI);
 
 Vue.component('Button', Button);
 Vue.component('Icon', Icon);
 Vue.component('Row', Row);
 Vue.component('Col', Col);
 Vue.component('Badge', Badge);
+Vue.component('RadioGroup', RadioGroup);
+Vue.component('Radio', Radio);
 
 
 new Vue({

@@ -37,34 +37,30 @@ export default {
     'todoId'(id){
       this.$router.push({ name: 'todo', params: { id: id } });
       //监听到用户的点击todoId的变化在跳转路由
-      console.log(this.$router)
     }
   },
   computed:{
-    todoList(){
-      const number = this.$store.getters.getTodoList.length;
-      if (this.$store.getters.getTodoList.length < this.todoNum) {
-         this.goList(this.$store.getters.getTodoList[0].id);
-      }
-      this.todoNum = number;
-      return this.$store.getters.getTodoList; // 返回vuex getters.js 定义的getTodoList数据
-    }
-    
+
   },
   created(){
      getTodoList({}).then(res => {
       const TODOS = res.data.todos; // 数据都会返回在res.data里面。
       this.menus = TODOS; // 我的把菜单数据赋值给定义的this.items
-      this.todoId = TODOS[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
+      this.todoId = this.menus[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
+      this.$router.push({ name: 'todo', params: { id: this.todoId } });
+    }).catch(err=>{
+      console.log(err)
     });
-    
     this.$store.dispatch('getTodo').then(() => { // 调用vuex actions.js 里面的 getTodo函数
       this.$nextTick(() => {
-        this.goList(this.todoList[0].id);
+        this.goList(this.menus[0].id);
       });
     });
   },
+  mounted(){
+  },
   methods:{
+    
     goList(id) { // 点击菜单时候,替换选中id
       this.todoId = id;
     },

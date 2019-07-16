@@ -18,17 +18,14 @@
 import item from './item.vue'
 import {getTodo} from '../api/api'
 export default {
+  props:['todoId'],
   data(){
     return{
       todo: { //详情内容
-        title: '星期一',
-        count: 12,
-        locked: false
+        
       },
       items: [ //代办单项列表
-        { checked: false, work: '新的一天1', isDelete: false },
-        { checked: false, work: '新的一天2', isDelete: false },
-        { checked: false, work: '新的一天3', isDelete: false }
+        
       ],
       text: '' //新增代办单项绑定的值
     }
@@ -42,14 +39,15 @@ export default {
   },
   created() {
   // created生命周期，在实例已经创建完成，页面还没渲染时调用init方法。
-    this.init();
+  //this.init();
+  },
+  mounted(){
   },
   methods:{
     init() {
     // 获取到 $route下params下的id,即我们在menus.vue组件处传入的数据。
-    if(this.$route.params.id){
-        const ID = this.$route.params.id;
-         getTodo({ id:ID }).then(res => {
+      const ID = this.$route.params.id;
+      getTodo({ id: ID }).then(res => {
       
         let { id, title, count, isDelete, locked, record
         } = res.data.todo;
@@ -63,8 +61,6 @@ export default {
           isDelete: isDelete
         };
       });
-    }else{
-      console.log('err')
     }
       
      
@@ -76,7 +72,6 @@ export default {
       this.text = ''; //初始化输入框的值。
     }
   } 
-}
 </script>
 
 <style lang="stylus">
