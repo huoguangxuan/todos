@@ -34,7 +34,7 @@ export default {
     }
   },
   watch:{
-    'todoId'(id){
+    'todoId':function(id){
       this.$router.push({ name: 'todo', params: { id: id } });
       //监听到用户的点击todoId的变化在跳转路由
     }
@@ -47,7 +47,6 @@ export default {
       const TODOS = res.data.todos; // 数据都会返回在res.data里面。
       this.menus = TODOS; // 我的把菜单数据赋值给定义的this.items
       this.todoId = this.menus[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
-      this.$router.push({ name: 'todo', params: { id: this.todoId } });
     }).catch(err=>{
       console.log(err)
     });

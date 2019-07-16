@@ -4,7 +4,7 @@
       <input type="checkbox" v-model="item.checked"> <!--item.checked-->
       <span class="checkbox-custom"></span>
     </label>
-    <input type="text" v-model="item.work" placeholder='写点什么。。。'>  <!--绑定item.text-->
+    <input type="text" v-model="item.text" placeholder='写点什么。。。'>  <!--绑定item.text-->
     <a class="delete-item"> <!--删除图标-->
       <Icon type="ios-trash-outline" />
     </a>
@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-    name:'item',
+  name:'item',
   props: {
     item: {
       type: Object,
@@ -22,9 +22,14 @@ export default {
           text:'你好,世界'
         }
       }
+    } //   这里申明 它想要一个叫做 ’item‘的数据。
+  }, //子组件显式的用 props 选项声明它期待获得的数据
+  data(){
+    return{
+
     }
-  }  //子组件显式的用 props 选项声明它期待获得的数据，
-//   这里申明 它想要一个叫做 ’item‘的数据。
+  }
+
 };
 </script>
 <style lang="stylus">

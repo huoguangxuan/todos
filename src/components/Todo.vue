@@ -2,7 +2,7 @@
   <div>
     <div class="head">
       <h2>
-        <span>{{todo.title}} <Badge :count="todo.count" class="badge-alone"></Badge></span>
+        <span><input  type="text" v-model="todo.title" @keyup.enter='updateTitle(todo)'/> <Badge :count="todo.count" class="badge-alone"></Badge></span>
         <span class="pull-right"><Icon type="ios-trash-outline" /></span>
         <span class="pull-right pr15"><Icon type='ios-lock-outline'/></span>
       </h2>
@@ -16,7 +16,7 @@
 </template>
 <script>
 import item from './item.vue'
-import {getTodo} from '../api/api'
+import {getTodo,editTodo,getTodoList} from '../api/api'
 export default {
   props:['todoId'],
   data(){
@@ -27,7 +27,7 @@ export default {
       items: [ //代办单项列表
         
       ],
-      text: '' //新增代办单项绑定的值
+      text: '', //新增代办单项绑定的值,
     }
   },
   components:{item},
@@ -48,7 +48,6 @@ export default {
     // 获取到 $route下params下的id,即我们在menus.vue组件处传入的数据。
       const ID = this.$route.params.id;
       getTodo({ id: ID }).then(res => {
-      
         let { id, title, count, isDelete, locked, record
         } = res.data.todo;
         // 请求成功，拿到res.data.todo;在将record 赋值到代办单项列表，其它数据赋值到todo对象
@@ -60,18 +59,26 @@ export default {
           locked: locked,
           isDelete: isDelete
         };
-      });
-    }
-      
-     
-    },
-    additem:function(){
+        });
+      },
+      additem:function(){
       this.items.push({
         checked: false, work: this.text, isDelete: false
       }); // 当用户点击回车时候 ，给items的值新增一个对象，this.text 即输入框绑定的值
       this.text = ''; //初始化输入框的值。
+    },
+    updateTitle(todo){
+      editTodo(todo).then(res=>{
+        console.log(res)
+      }).catch(err=>{
+        console.log(err)
+      })
+       
+        
     }
-  } 
+  },
+    
+} 
 </script>
 
 <style lang="stylus">
