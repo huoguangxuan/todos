@@ -41,26 +41,26 @@ export default {
   },
   created(){
      getTodoList({}).then(res => {
-       console.log(res);
       const TODOS = res.data.todos; // 数据都会返回在res.data里面。
       this.menus = TODOS; // 我的把菜单数据赋值给定义的this.items
-      this.todoId = menus[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
+      this.todoId = this.menus[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
     }).catch(err=>{
       console.log(err)
     });
-    // this.$store.dispatch('getTodo').then(() => { // 调用vuex actions.js 里面的 getTodo函数
-    //   this.$nextTick(() => {
-    //     this.goList(this.menus[0].id);
-    //   });
-    // });
+    this.$store.dispatch('getTodo').then(() => { // 调用vuex actions.js 里面的 getTodo函数
+      this.$nextTick(() => {
+        this.goList(this.menus[0].id);
+        this.$emit('get-todo-id',this.menus[0].id);
+      });
+    });
   },
   mounted(){
-    // this.initData();
   },
   methods:{
     
     goList(id) { // 点击菜单时候,替换选中id
       this.todoId = id;
+      
     },
     additem:function(){
       var that = this

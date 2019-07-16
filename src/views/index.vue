@@ -1,8 +1,20 @@
 <template>
     <div id="app">
         <Row>
-            <Col span="5"><Menu></Menu></Col>
-            <Col span="19" class="right"><Todo/></Col>
+            <Col span="5">
+              <Menu 
+                ref='menu'
+                @get-todo-id="mounted1"
+              >
+            </Menu>
+            <div>
+            </div>
+            </Col>
+            <Col span="19" class="right">
+              <Todo
+              :todo-id='todoId'
+              />
+            </Col>
         </Row>
     </div>
     
@@ -11,9 +23,26 @@
 import Menu from '../components/Menu'
 import Todo from '../components/Todo'
 export default {
+  data(){
+    return{
+      todoId:''
+    }
+  },
     components:{
         Menu,
         Todo
+    },
+    created(){
+    },
+    mounted(){
+    },
+    methods:{
+      mounted1: function () {
+        this.$nextTick(function () {
+          this.todoId=this.$refs.menu.todoId;
+          console.log(this.todoId)
+        })
+      }
     }
 }
 </script>

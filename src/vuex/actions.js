@@ -1,4 +1,4 @@
-import apis from '../api/api'; // 引入api接口函数getTodoList，请求最新的代办事项列表数据
+import {getTodoList} from '../api/api'; // 引入api接口函数getTodoList，请求最新的代办事项列表数据
   
   export const getTodo = ({ // 定义一个名字为getTodo的事件
     commit
@@ -9,7 +9,7 @@ import apis from '../api/api'; // 引入api接口函数getTodoList，请求最�
        会调用getTodoList这个ajax请求函数，
        函数返回值后，在调用store.js里面的EDITTODE方法，并且把值传给它。
        */
-      apis.getTodoList().then((res) => {
+      getTodoList().then((res) => {
         commit('EDITTODE', res.data.todos);
         resolve();
       });
