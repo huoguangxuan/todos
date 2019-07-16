@@ -1,5 +1,4 @@
 <template>
-
     <div id="app">
         <Row>
             <Col span="5"><Menu></Menu></Col>
@@ -43,6 +42,6 @@ body
   // border-radius(20px 50px 50px 0px)
 .active
     color primary
-::placeholder
+input::placeholder
   color gray
 </style>

@@ -2,13 +2,13 @@
 <div>
 <ul>
     <li 
-    v-for='menu in todoList' 
+    v-for='menu in menus' 
     @click="goList(menu.id)"  
     :key='menu.id'
-    :class="{'active':item.id===todoId}"
+    :class="{'active':menu.id===todoId}"
     >
       <Icon type="ios-lock-outline"  class="pr15" />
-      <span class="pr15">{{menu.tit}}</span>
+      <span class="pr15">{{menu.title}}</span>
       <span><Badge class="badge-alone" :count="menu.count"/> </span>
     </li>
     <!-- <li><Icon class="pr15" type="ios-lock-outline" />李四</li> -->
@@ -23,6 +23,7 @@
 </div>
 </template>
 <script>
+import {getTodoList} from '../api/api'
 export default {
   name:'amenu',
   data(){
@@ -33,34 +34,31 @@ export default {
     }
   },
   watch:{
-    'todoId'(id){
-      this.$router.push({ name: 'todo', params: { id: id } });
-      //监听到用户的点击todoId的变化在跳转路由
-    }
+
   },
   computed:{
-    todoList(){
-      const number = this.$store.getters.getTodoList.length;
-      if (this.$store.getters.getTodoList.length < this.todoNum) {
-         this.goList(this.$store.getters.getTodoList[0].id);
-      }
-      return this.$store.getters.getTodoList; // 返回vuex getters.js 定义的getTodoList数据
-    }
-    
+
   },
   created(){
-     // getTodoList({}).then(res => {
-    //   const TODOS = res.data.todos; // 数据都会返回在res.data里面。
-    //   this.items = TODOS; // 我的把菜单数据赋值给定义的this.items
-    //   this.todoId = TODOS[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
-    // });
-    this.$store.dispatch('getTodo').then(() => { // 调用vuex actions.js 里面的 getTodo函数
-      this.$nextTick(() => {
-        this.goList(this.todoList[0].id);
-      });
+     getTodoList({}).then(res => {
+       console.log(res);
+      const TODOS = res.data.todos; // 数据都会返回在res.data里面。
+      this.menus = TODOS; // 我的把菜单数据赋值给定义的this.items
+      this.todoId = menus[0].id; // 把菜单数据的默认的第一个对象的id赋值给默认选中的id
+    }).catch(err=>{
+      console.log(err)
     });
+    // this.$store.dispatch('getTodo').then(() => { // 调用vuex actions.js 里面的 getTodo函数
+    //   this.$nextTick(() => {
+    //     this.goList(this.menus[0].id);
+    //   });
+    // });
+  },
+  mounted(){
+    // this.initData();
   },
   methods:{
+    
     goList(id) { // 点击菜单时候,替换选中id
       this.todoId = id;
     },
