@@ -8,7 +8,7 @@
             </div>
             </v-col>
             <v-col span="19" class="right">
-              <router-view></router-view>
+             <Todo/>
             </v-col>
         </Row>
     </div> 
@@ -18,11 +18,6 @@
 import Menu from '../components/Menu'
 import Todo from '../components/Todo'
 export default {
-  data(){
-    return{
-      todoId:''
-    }
-  },
     components:{
         Menu,
         Todo
