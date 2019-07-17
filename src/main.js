@@ -20,7 +20,7 @@ Vue.use(ElementUI);
 Vue.component('Button', Button);
 Vue.component('Icon', Icon);
 Vue.component('Row', Row);
-Vue.component('Col', Col);
+Vue.component('v-col', Col);
 Vue.component('Badge', Badge);
 Vue.component('RadioGroup', RadioGroup);
 Vue.component('Radio', Radio);

@@ -1,17 +1,15 @@
 <template>
     <div id="app">
         <Row>
-            <Col span="5">
+            <v-col span="5">
               <Menu>
             </Menu>
             <div>
             </div>
-            </Col>
-            <Col span="19" class="right">
-              <Todo
-              :todo-id='todoId'
-              />
-            </Col>
+            </v-col>
+            <v-col span="19" class="right">
+              <router-view></router-view>
+            </v-col>
         </Row>
     </div> 
     
