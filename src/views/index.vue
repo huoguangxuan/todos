@@ -8,7 +8,7 @@
             </div>
             </v-col>
             <v-col span="19" class="right">
-             <Todo/>
+             <router-view></router-view>
             </v-col>
         </Row>
     </div> 

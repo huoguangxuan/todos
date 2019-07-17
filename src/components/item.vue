@@ -6,7 +6,7 @@
     </label>
     <input type="text" v-model="item.text" placeholder='写点什么。。。'>  <!--绑定item.text-->
     <a class="delete-item"> <!--删除图标-->
-      <Icon type="ios-trash-outline" />
+      <i class="el-icon-delete"></i>
     </a>
   </div>
 </template>
@@ -37,7 +37,8 @@ export default {
         outline none
         &:focus
             cursor: text
-
+    a
+      color #666
 
 </style>
 

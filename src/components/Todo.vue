@@ -2,12 +2,15 @@
   <div>
     <div class="head">
       <h2>
-        <span><input  type="text" v-model="todo.title" @keyup.enter='updateTitle(todo)'/> <Badge :count="todo.count" class="badge-alone"></Badge></span>
-        <span class="pull-right"><Icon type="ios-trash-outline" /></span>
-        <span class="pull-right pr15"><Icon type='ios-lock-outline'/></span>
+        <span><input  type="text" v-model="todo.title" @keyup.enter='updateTitle' :disabled="todo.locked"/> <Badge :count="todo.count ||0" v-if="!todo.locked" class="badge-alone"></Badge></span>
+        <a class="pull-right pr15"  v-if="todo.locked"><i class="el-icon-circle-close"></i></a>
+        <a class="pull-right pr15" v-if="!todo.locked"><i class="el-icon-delete"></i></a>
+
+        <a class="pull-right pr15" v-if="todo.locked"><i class="el-icon-unlock"></i></a>
+        <a class="pull-right pr15"><i class="el-icon-lock"></i></a>
       </h2>
       <Icon type='ios-add-circle-outline' class="addicon" /> 
-      <input type="text" class="inputtodo" @keyup.enter='onAdd' v-model="text" placeholder="请输入些内容...">
+      <input type="text" class="inputtodo" @keyup.enter='onAdd' v-model="text" placeholder="请输入些内容..." >
     </div>
     <div class="item" v-for="(item,index) in items" :key="index"> <!-- 这里`v-for`会循环我们在 `data`函数 事先定义好的 ’items‘模拟数据，循环后拿到单个对象，在通过prop把数据传输给子组件 item -->
         <item :item="item"></item>
@@ -16,42 +19,62 @@
 </template>
 <script>
 import item from './Item.vue'
-import {getTodo,editTodo,getTodoList} from '../api/api'
+import {getTodo,editTodo,getTodoList, addRecord} from '../api/api'
 export default {
   props:['todoId'],
   data(){
     return{
      todo: { //详情内容
-        title: '星期一',
-        count: 12,
-        locked: false
+        
       },
       items: [ //代办单项列表
-        { checked: false, text: '新的一天', isDelete: false },
-        { checked: false, text: '新的一天', isDelete: false },
-        { checked: false, text: '新的一天', isDelete: false }
+        
       ],
       text: '' //新增代办单项绑定的值
     }
   },
   components:{item},
   watch:{
-
+    '$route.params.id'(id){
+      this.initDate()
+    }
+  },
+  computed:{
+    
   },
   created() {
   // created生命周期，在实例已经创建完成，页面还没渲染时调用init方法。
-  //this.init();
+  this.initDate()
   },
   mounted(){
-    // this.initDate()
+     
   },
   methods:{
-  
+    
+    initDate(){
+      const ID = this.$route.params.id
+      getTodo({id:ID}).then(res=>{
+        let { id, title, count, isDelete, locked, record
+        } = res.data.todo
+        this.todo= {
+          id,
+          title,
+          count,
+          locked,
+          isDelete
+        }
+
+        this.items=record
+      })
+    },
     onAdd() {
-      this.items.push({
-        checked: false, text: this.text, isDelete: false
-      }); // 当用户点击回车时候 ，给items的值新增一个对象，this.text 即输入框绑定的值
-      this.text = ''; //初始化输入框的值。
+      //调待办的接口
+      const id = this.$route.params.id
+      addRecord({id,text:this.text}).then(()=>{
+        //请求成功后初始化
+        this.text=''
+        this.initDate()
+      })
     }
   },
     
@@ -70,7 +93,7 @@ export default {
     background transparent
     padding-left add(10,0)
     outline none
-    width 95% 
+    width 90% 
   .addicon
     color #666
   .item
@@ -79,6 +102,7 @@ export default {
   .ios-trash-outline{
     font-weight bold
   }
-
+input:disabled
+  color #999
 </style>
 

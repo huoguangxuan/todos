@@ -2,7 +2,7 @@
   <div>
     <ul>
         <li 
-        v-for='(menu,index) in menus' 
+        v-for='(menu,index) in todoList' 
         :key='index'
         @click="goList(menu.id)"
         :class="{'active':menu.id === todoId}"
@@ -28,22 +28,31 @@ export default {
     return{
       todoId:'',
       menus:[
-        { title: '星期一', count: 1, locked: true }, //菜单的模拟数据
-        { title: '星期二', count: 2, locked: true }, 
-        { title: '星期三', count: 3, locked: false }
       ]
     }
   },
   watch:{
+    'todoId'(newValue){
+      // this.$router.push({ path: `/todo/${newValue}` })
+       this.$router.push({ name: 'todo', params: { id: newValue } });
+      //监听到用户的点击todoId的变化在跳转路由
+    }
   },
   computed:{
-
+    todoList(){
+         return this.$store.getters.getTodoList; // 返回vuex getters.js 定义的getTodoList数据
+    }
   },
   created(){
-   
+    // this.initDate()
+    this.$store.dispatch('getTodo').then(() => { //调用vuex actions.js 里面的 getTodo函数
+      this.$nextTick(() => {
+        this.goList(this.todoList[0].id);
+      });
+    });
   },
   mounted(){
-    this.initDate()
+    
   },
   methods:{
     initDate(){
