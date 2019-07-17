@@ -46,18 +46,20 @@ export default {
     this.initDate()
   },
   methods:{
-    
-      initDate(){
-      let _this = this
-      getTodoList().then(res=>{
-        var {todos} = res.data
-        this.menus=todos;
-        this.todoId=this.menus[0].id
-      })
+    initDate(){
+        getTodoList().then(res=>{
+          var {todos} = res.data
+          this.menus=todos;
+          this.todoId=this.menus[0].id
+        })
     },
     additem(){
-      addTodo({}).then(res=>{
-        this.initDate()
+      addTodo({}).then(()=>{
+       getTodoList().then(res=>{
+        var {todos} = res.data
+        this.menus=todos;
+        this.todoId=this.menus[this.menus.length-1].id
+      })
       })
     },
     goList(id){
