@@ -96,7 +96,7 @@ export default {
     // 修改标题
     mock.onPost('/todo/editTodo').reply(config => {
       
-      let todo = JSON.parse(config.data);
+      let {todo} = JSON.parse(config.data);
 
       Todos.some((t, index) => {
 

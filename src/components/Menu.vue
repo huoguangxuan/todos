@@ -7,7 +7,8 @@
         @click="goList(menu.id)"
         :class="{'active':menu.id === todoId}"
         >
-          <Icon type="ios-lock-outline"  class="pr15" />
+          <span class="pr15">
+            <i v-if="menu.locked" class="el-icon-lock"></i></span>
           <span class="pr15">{{menu.title}}</span>
           <span><Badge class="badge-alone" :count="menu.count"/> </span>
         </li>
@@ -64,11 +65,14 @@ export default {
     },
     additem(){
       addTodo({}).then(()=>{
-       getTodoList().then(res=>{
-        var {todos} = res.data
-        this.menus=todos;
-        this.todoId=this.menus[this.menus.length-1].id
-      })
+        this.$store.dispatch('getTodo').then(res=>{
+          this.goList(this.todoList[this.todoList.length-1].id);//为啥不起作用
+        })
+      //  getTodoList().then(res=>{
+      //   var {todos} = res.data
+      //   this.menus=todos;
+      //   this.todoId=this.menus[this.menus.length-1].id
+      // })
       })
     },
     goList(id){

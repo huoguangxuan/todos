@@ -1,19 +1,24 @@
 <template>
   <div>
     <div class="head">
-      <h2>
-        <span><input  type="text" v-model="todo.title" @keyup.enter='updateTitle' :disabled="todo.locked"/> <Badge :count="todo.count ||0" v-if="!todo.locked" class="badge-alone"></Badge></span>
-        <a class="pull-right pr15"  v-if="todo.locked"><i class="el-icon-circle-close"></i></a>
-        <a class="pull-right pr15" v-if="!todo.locked"><i class="el-icon-delete"></i></a>
-
-        <a class="pull-right pr15" v-if="todo.locked"><i class="el-icon-unlock"></i></a>
-        <a class="pull-right pr15"><i class="el-icon-lock"></i></a>
+      <h2  @click="isUpdate = true ">
+        <div v-if="!isUpdate" >
+            <span><input style="font-weight:600"  type="text" v-model="todo.title" @keyup.enter='updateTitle'/> <Badge :count="todo.count ||0" v-show="!isUpdate" class="badge-alone"></Badge></span>
+            <a class="pull-right pr15" @click.stop="onLock" v-if="todo.locked" ><i class="el-icon-lock"></i></a>
+            <a class="pull-right pr15" @click.stop="onLock"  v-if="!todo.locked"  ><i class="el-icon-unlock"></i></a>
+            <a class="pull-right pr15" @click="onDelete"  ><i class="el-icon-delete"></i></a>
+        </div>
+        <div v-if="isUpdate" >
+          <span><input  type="text" v-model="todo.title" @keyup.enter='updateTitle' :disabled="todo.locked"/></span>
+          <a class="pull-right pr15" @click.stop="isUpdate = false"><i class="el-icon-error"></i></a>
+        </div>
       </h2>
+      
       <Icon type='ios-add-circle-outline' class="addicon" /> 
-      <input type="text" class="inputtodo" @keyup.enter='onAdd' v-model="text" placeholder="请输入些内容..." >
+      <input type="text" class="inputtodo" :disabled="todo.locked" @keyup.enter='onAdd' v-model="text" placeholder="请输入些内容..." >
     </div>
-    <div class="item" v-for="(item,index) in items" :key="index"> <!-- 这里`v-for`会循环我们在 `data`函数 事先定义好的 ’items‘模拟数据，循环后拿到单个对象，在通过prop把数据传输给子组件 item -->
-        <item :item="item"></item>
+    <div class="item" v-for="(item,index) in items" :key="index" > <!-- 这里`v-for`会循环我们在 `data`函数 事先定义好的 ’items‘模拟数据，循环后拿到单个对象，在通过prop把数据传输给子组件 item -->
+        <item :item="item" :index="index" :id="todo.id" :initDate="initDate" :locked="todo.locked"></item>
     </div>
   </div>
 </template>
@@ -30,7 +35,8 @@ export default {
       items: [ //代办单项列表
         
       ],
-      text: '' //新增代办单项绑定的值
+      text: '' ,//新增代办单项绑定的值\
+      isUpdate: false // 新增修改状态
     }
   },
   components:{item},
@@ -63,19 +69,42 @@ export default {
           locked,
           isDelete
         }
-
         this.items=record
       })
     },
+    
+    updateTodo(){
+      var _this =this
+      editTodo({todo:this.todo}).then(res=>{
+        _this.$store.dispatch('getTodo').then(res=>{})
+      })
+    },
+    updateTitle(){
+      this.updateTodo()
+      this.isUpdate = false;
+    },
     onAdd() {
       //调待办的接口
+      console.log(1)
+      var _this=this
       const id = this.$route.params.id
       addRecord({id,text:this.text}).then(()=>{
-        //请求成功后初始化
-        this.text=''
-        this.initDate()
+        console.log('ok?')
+        _this.text='',
+        _this.initDate()
+        _this.$store.dispatch('getTodo');
       })
+    },
+    onDelete(){
+      this.todo.isDelete = true;
+      this.updateTodo()
+    },
+    onLock(){
+        this.todo.locked = !this.todo.locked;
+        this.updateTodo()
+
     }
+
   },
     
 } 
