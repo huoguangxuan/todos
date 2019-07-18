@@ -7,8 +7,18 @@
       <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
     </p>
     <Button type="Primary">Primary</Button>
+    <Count/>
+    <Count/>
     </div>
   </template>
+<script>
+import Count from './count'
+export default {
+  components:{
+    Count
+  }
+}
+</script>
 
 <style lang="stylus">
 .hello

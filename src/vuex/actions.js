@@ -23,3 +23,9 @@ import {
   }) => {
     commit('MENUOPEN'); // 调用store.js里面的MENUOPEN方法
   };
+
+  export const Increment = ({ // 定义一个名字为Increment的事件
+    commit
+  }) => {
+    commit('increment'); // 调用store.js里面的increment方法
+  };
